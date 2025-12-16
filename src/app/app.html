@@ -1,8 +1,10 @@
 <div class="flex h-screen bg-gray-100">
   <!-- Sidebar -->
-  <div class="bg-white shadow-md transition-all duration-300 flex flex-col" [ngClass]="isSidePanelExpanded() ? 'w-64' : 'w-20'">
+  <div class="bg-white border-r transition-all duration-300 flex flex-col" [ngClass]="isSidePanelExpanded() ? 'w-64' : 'w-20'">
     <div class="block flex-grow">
-      <button class="block px-2 pt-1 pb-1.5 w-full text-start text-gray-500 hover:bg-gray-200 cursor-pointer text-xs font-semibold">
+      <button [routerLink]="'router-task'" 
+        [routerLinkActive]="'active'"
+        class="block px-2 pt-1 pb-1.5 w-full text-start text-gray-500 hover:bg-gray-100 cursor-pointer text-xs font-semibold [&.active]:bg-gray-100">
         Router
       </button>
     </div>
@@ -14,7 +16,7 @@
   </div>
 
   <!-- Content -->
-  <div class="flex-1 p-10">
-    
+  <div class="flex-1 p-1">
+    <router-outlet></router-outlet>    
   </div>
 </div>
