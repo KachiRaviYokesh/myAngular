@@ -1,1 +1,8 @@
-<p>router works!</p>
+<div>
+    <button [routerLink]="'home'" [routerLinkActive]="'active'">Home</button>
+    <button [routerLink]="'about'" [routerLinkActive]="'active'">About</button>
+    <button [routerLink]="'contacts'" [routerLinkActive]="'active'">Contacts</button>
+</div>
+<section>
+    <router-outlet />
+</section>
