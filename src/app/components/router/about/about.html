@@ -1,1 +1,11 @@
-<span class="flex px-2 pt-1 pb-1.5 text-gray-900 text-xs cursor-pointer">ABOUT</span>
+<div class="p-1 bg-gray-100 flex justify-center mb-1 gap-1">
+    <button (click)="secondLevelBtn('company')" [class.active] = "activeRoute === 'company'"
+        class="px-2 pt-1 pb-1.5 text-gray-600 hover:bg-white text-xs cursor-pointer [&.active]:bg-white [&.active]:text-gray-900">Company</button>
+    <button (click)="secondLevelBtn('management')" [class.active] = "activeRoute === 'management'"
+        class="px-2 pt-1 pb-1.5 text-gray-600 hover:bg-white text-xs cursor-pointer [&.active]:bg-white [&.active]:text-gray-900">Management</button>
+    <button (click)="secondLevelBtn('teams')" [class.active] = "activeRoute === 'teams'"
+        class="px-2 pt-1 pb-1.5 text-gray-600 hover:bg-white text-xs cursor-pointer [&.active]:bg-white [&.active]:text-gray-900">Teams</button>
+</div>
+<section class="p-1 bg-gray-100">
+    <router-outlet />
+</section>
