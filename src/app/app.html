@@ -4,7 +4,7 @@
     <div class="block flex-grow">
       <button [routerLink]="'router-task'" 
         [routerLinkActive]="'active'"
-        class="block px-2 pt-1 pb-1.5 w-full text-start text-gray-400 hover:bg-gray-100 cursor-pointer text-xs font-semibold [&.active]:bg-gray-100 [&.active]:text-gray-600">
+        class="block px-2 pt-1 pb-1.5 w-full text-start text-gray-600 hover:bg-gray-100 cursor-pointer text-xs [&.active]:bg-gray-100 [&.active]:text-gray-900">
         Router
       </button>
     </div>
@@ -16,7 +16,7 @@
   </div>
 
   <!-- Content -->
-  <div class="flex-1 p-1">
+  <div class="flex-1 p-1 overflow-auto">
     <router-outlet />
   </div>
 </div>

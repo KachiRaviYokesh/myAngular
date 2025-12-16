@@ -1,8 +1,11 @@
-<div>
-    <button [routerLink]="'home'" [routerLinkActive]="'active'">Home</button>
-    <button [routerLink]="'about'" [routerLinkActive]="'active'">About</button>
-    <button [routerLink]="'contacts'" [routerLinkActive]="'active'">Contacts</button>
+<div class="p-1 bg-white flex justify-center mb-1 gap-1">
+    <button [routerLink]="'home'" [routerLinkActive]="'active'"
+        class="px-2 pt-1 pb-1.5 text-gray-600 hover:bg-gray-100 text-xs cursor-pointer [&.active]:bg-gray-100 [&.active]:text-gray-900">Home</button>
+    <button [routerLink]="'about'" [routerLinkActive]="'active'"
+        class="px-2 pt-1 pb-1.5 text-gray-600 hover:bg-gray-100 text-xs cursor-pointer [&.active]:bg-gray-100 [&.active]:text-gray-900">About</button>
+    <button [routerLink]="'contacts'" [routerLinkActive]="'active'"
+        class="px-2 pt-1 pb-1.5 text-gray-600 hover:bg-gray-100 text-xs cursor-pointer [&.active]:bg-gray-100 [&.active]:text-gray-900">Contacts</button>
 </div>
-<section>
+<section class="p-1 bg-white">
     <router-outlet />
 </section>
