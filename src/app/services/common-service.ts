@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
-interface TeamsDepartment {
-  id:number,
-  team:string,  
-}
-interface TeamMembers {
-  id:number,
-  members:string[],  
-}
+import { TeamEmployees, TeamsDepartment } from '../interfaces/common-interface';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -30,7 +24,7 @@ export class CommonService {
     },
   ];
 
-  teamMembers:TeamMembers[] = [
+  teamMembers:TeamEmployees[] = [
     {
       id: 1,
       members: ['Kapil Dev', 'Gavaskar', 'krishnamachari Srikkanth']
