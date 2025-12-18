@@ -1,5 +1,11 @@
-<div class="flex items-center justify-center gap-2">
+<div class="flex items-center justify-center bg-gray-100 gap-2 p-1 mb-1">
     @for(item of teamsDept; track item) {
-        <button class="flex justify-center px-2 pt-1 pb-1.5 bg-white text-gray-900 text-xs cursor-pointer">{{item.team}}</button>
+        <button (click)="teamDepartment('../team-members/' + item.id)"
+            class="flex justify-center px-2 pt-1 pb-1.5 hover:bg-white text-gray-900 text-xs cursor-pointer">
+            {{item.team}}
+        </button>
     }
+</div>
+<div>
+    <router-outlet />
 </div>

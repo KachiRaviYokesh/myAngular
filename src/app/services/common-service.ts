@@ -3,6 +3,10 @@ interface TeamsDepartment {
   id:number,
   team:string,  
 }
+interface TeamMembers {
+  id:number,
+  members:string[],  
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -26,10 +30,10 @@ export class CommonService {
     },
   ];
 
-  teamMembers = [
+  teamMembers:TeamMembers[] = [
     {
       id: 1,
-      members: ['Kapil Dev', 'Gavaskar', 'Krishnamachari Shreekanth']
+      members: ['Kapil Dev', 'Gavaskar', 'krishnamachari Srikkanth']
     },
     {
       id: 2,

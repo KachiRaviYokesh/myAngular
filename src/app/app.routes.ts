@@ -34,7 +34,11 @@ export const routes: Routes = [
                     {
                         path: 'teams',
                         loadComponent:()=>import('./components/router/about/teams/teams').then(c=>c.Teams),
-                    }
+                    },
+                    {
+                        path: 'team-members/:id',
+                        loadComponent:()=>import('./components/router/about/team-members/team-members').then(c=>c.TeamMembers),
+                    },
                 ]
             },
             {
@@ -43,4 +47,8 @@ export const routes: Routes = [
             },
         ]
     },
+    {
+        path: '**',
+        loadComponent:()=>import('./components/no-records/no-records').then(c=>c.NoRecords)
+    }
 ];
