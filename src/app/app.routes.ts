@@ -48,6 +48,10 @@ export const routes: Routes = [
         ]
     },
     {
+        path: 'custom-directive',
+        loadComponent:()=>import('./components/custom-directives/custom-directives').then(c=>c.CustomDirectives),
+    },
+    {
         path: '**',
         loadComponent:()=>import('./components/no-records/no-records').then(c=>c.NoRecords)
     }
