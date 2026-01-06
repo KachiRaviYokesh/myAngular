@@ -1,2 +1,14 @@
-<div appEffect>STATIC</div>
-<div appHoverEffect>HOVER</div>
+<div appEffect>STATIC Colors From Directives</div>
+<div class="flex justify-evenly mb-1 gap-1">
+    <div appHoverEffect preferedClr="khaki">HOVER Khaki Color</div>
+    <div appHoverEffect preferedClr="skyblue">HOVER Skyblue Color</div>
+</div>
+<div class="flex justify-evenly mb-1 gap-1">
+    <input class="border border-gray-400 px-2 py-1 rounded flex-grow" type="text" [value]="inputVal">
+    <input class="border border-gray-400 px-2 py-1 rounded flex-grow" type="text" [ipValue]="'I am from Directive'" value="I am from Component" appInputChanges>
+    <input class="border border-gray-400 px-2 py-1 rounded flex-grow" type="text" [value]="inputVal" [ipValue]="'I am from Directive'" appInputChanges>
+</div>
+<div class="flex justify-evenly mb-1 gap-1">
+    <input appConditionalEffect [receivedBoolean]="defaultState()" class="border border-gray-400 px-2 py-1 rounded flex-grow" type="text">
+    <button class="bg-blue-300 border border-blue-600 px-3 rounded" (click)="triggerDisable()">{{defaultState()?'Enable':'Disable'}} Input</button>
+</div>
