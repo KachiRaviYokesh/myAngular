@@ -12,6 +12,11 @@
         class="block px-2 pt-1 pb-1.5 w-full text-start text-gray-600 hover:bg-gray-100 cursor-pointer text-xs [&.active]:bg-gray-100 [&.active]:text-gray-900">
         Custom Directive
       </button>
+      <button [routerLink]="'api-call'" 
+        [routerLinkActive]="'active'"
+        class="block px-2 pt-1 pb-1.5 w-full text-start text-gray-600 hover:bg-gray-100 cursor-pointer text-xs [&.active]:bg-gray-100 [&.active]:text-gray-900">
+        API Call
+      </button>
     </div>
     <div class="p-1 flex items-center border-t">
       <button (click)="toggleSidePanel()" class="aspect-square w-6 h-6 flex items-center justify-center rounded hover:bg-gray-200">
