@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-api-call',
@@ -6,6 +7,17 @@ import { Component } from '@angular/core';
   templateUrl: './api-call.html',
   styles: ``,
 })
-export class ApiCall {
+export class ApiCall implements OnInit {
+  private http = inject(HttpClient);
+  protected tableDatas:any = [];
+  ngOnInit(): void {
+    console.log(this.http);    
+    const receivedData = this.http.get('https://jsonplaceholder.typicode.com/comments')
+    .subscribe({
+      next: (res) => {
+        this.tableDatas = res;
+      }
+    });
+  }
 
 }
