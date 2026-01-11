@@ -52,6 +52,10 @@ export const routes: Routes = [
         loadComponent:()=>import('./components/custom-directives/custom-directives').then(c=>c.CustomDirectives),
     },
     {
+        path: 'observable',
+        loadComponent:()=>import('./components/observable/observable').then(c=>c.Observable),
+    },
+    {
         path: 'api-call',
         loadComponent:()=>import('./components/api-call/api-call').then(c=>c.ApiCall),
     },
