@@ -53,7 +53,7 @@ export const routes: Routes = [
     },
     {
         path: 'observable',
-        loadComponent:()=>import('./components/observable/observable').then(c=>c.Observable),
+        loadComponent:()=>import('./components/observable-comp/observable-comp').then(c=>c.ObservableComp),
     },
     {
         path: 'api-call',
