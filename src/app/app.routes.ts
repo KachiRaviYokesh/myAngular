@@ -56,7 +56,7 @@ export const routes: Routes = [
         loadComponent:()=>import('./components/observable-comp/observable-comp').then(c=>c.ObservableComp),
     },
     {
-        path: 'api-call',
+        path: 'api-call-observable',
         loadComponent:()=>import('./components/api-call/api-call').then(c=>c.ApiCall),
     },
     {
