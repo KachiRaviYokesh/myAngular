@@ -68,6 +68,7 @@ export class ObservableComp implements OnInit {
   firstOfObsData:number[] = [];
   firstOfObs$ = of([1,2,3,4],[5,6,7,8]);
   protected firstOfRespondData() {
+    this.firstOfObsData = [];
     this.firstOfObs$.subscribe({
       next:(firstOfRes) => {
         firstOfRes.forEach((d)=>{
@@ -84,6 +85,7 @@ export class ObservableComp implements OnInit {
   firstFromObsData:string[] = [];
   firstFromObs$ = from('YOKESH');
   protected firstFromRespondData() {
+    this.firstFromObsData = [];
     this.firstFromObs$.subscribe({
       next:(firstFromRes) => {
         this.firstFromObsData.push(firstFromRes);

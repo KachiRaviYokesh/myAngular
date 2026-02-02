@@ -19,12 +19,14 @@
         </tr>
     </thead>
     <tbody class="bg-white dark:bg-gray-800">
-        <tr>
-            <td class="border-b border-gray-100 p-4 pl-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">data.id</td>
-            <td class="border-b border-gray-100 p-4 text-gray-500 dark:border-gray-700 dark:text-gray-400">data.postId</td>
-            <td class="border-b border-gray-100 p-4 pr-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">data.name</td>
-            <td class="border-b border-gray-100 p-4 pr-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">data.email</td>
-            <td class="border-b border-gray-100 p-4 pr-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">data.body</td>
-        </tr>
+        @for(data of receivedDatas; track data) {
+            <tr>
+                <td class="border-b border-gray-100 p-4 pl-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">{{data.id}}</td>
+                <td class="border-b border-gray-100 p-4 text-gray-500 dark:border-gray-700 dark:text-gray-400">{{data.postId}}</td>
+                <td class="border-b border-gray-100 p-4 pr-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">{{data.name}}</td>
+                <td class="border-b border-gray-100 p-4 pr-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">{{data.email}}</td>
+                <td class="border-b border-gray-100 p-4 pr-8 text-gray-500 dark:border-gray-700 dark:text-gray-400">{{data.body}}</td>
+            </tr>
+        }
     </tbody>
 </table>
