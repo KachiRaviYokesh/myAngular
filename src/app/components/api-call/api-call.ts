@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { map, filter, Observable, tap } from 'rxjs';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-api-call',
@@ -8,16 +8,17 @@ import { map, filter, Observable, tap } from 'rxjs';
   templateUrl: './api-call.html',
   styles: ``,
 })
-export class ApiCall implements OnInit {
-  apiUrl = 'https://jsonplaceholder.typicode.com/comments';
-  receivedDatas:any;
+export class ApiCall implements OnInit, OnDestroy {
+  public apiUrl = 'https://jsonplaceholder.typicode.com/comments';
+  public receivedDatas = signal<any[]>([]);
+  public receivedComments?:Subscription;
   constructor(
     private http: HttpClient,
   ) {}
   ngOnInit(): void {
-    this.commentFun().subscribe({
+    this.receivedComments = this.commentFun().subscribe({
       next: (data) => {
-        this.receivedDatas = data;
+        this.receivedDatas.set(data);
         console.log('next: ', data);
       },
       error: (e) => {
@@ -26,7 +27,7 @@ export class ApiCall implements OnInit {
       complete: () => {
         console.log('Complete');
       }
-    })
+    });    
   }
   commentFun(): Observable<any> {
     return this.http.get(this.apiUrl).pipe(      
@@ -36,5 +37,10 @@ export class ApiCall implements OnInit {
         });
       }),
     );
+  }
+  ngOnDestroy(): void {
+    if(this.receivedComments) {
+      this.receivedComments?.unsubscribe();
+    }    
   }
 }
