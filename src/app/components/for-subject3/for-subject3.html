@@ -1,1 +1,14 @@
-<p>for-subject3 works!</p>
+<div class="p-5">
+    <div class="rounded-md 
+    bg-green-500 px-2 py-1 text-xs font-medium mb-2
+    text-green-50 inset-ring inset-ring-green-600/20">
+        Subject-Component-3
+    </div>
+    @for(data of forSubject3Data(); track data) {
+        <span class="inline-flex items-center rounded-md 
+        bg-green-500 px-2 py-1 text-xs font-medium mr-2
+        text-green-50 inset-ring inset-ring-green-600/20">
+            {{data}}
+        </span>
+    }
+</div>

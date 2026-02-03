@@ -1,8 +1,9 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ForSubject1 } from "../for-subject1/for-subject1";
 import { ForSubject2 } from "../for-subject2/for-subject2";
 import { ForSubject3 } from "../for-subject3/for-subject3";
+import { ForSubject } from '../../services/for-subject';
 
 @Component({
   selector: 'app-subject-comp',
@@ -13,6 +14,7 @@ import { ForSubject3 } from "../for-subject3/for-subject3";
 export class SubjectComp implements OnInit {  
   firstSubData = signal<string>('');
   firstSubVariable$ = new Subject<string>();
+  forSubject = inject(ForSubject);
 
   ngOnInit(): void {
     this.firstSubVariable$.subscribe({
@@ -32,5 +34,6 @@ export class SubjectComp implements OnInit {
 
   protected updateFirstSubjectData() {
     this.firstSubVariable$.next('second');
+    this.forSubject.commonUpdate(['NEW','-','UPDATE']);
   }
 }

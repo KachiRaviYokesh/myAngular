@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ForSubject } from '../../services/for-subject';
 
 @Component({
   selector: 'app-for-subject1',
@@ -6,6 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: './for-subject1.html',
   styles: ``,
 })
-export class ForSubject1 {
-
+export class ForSubject1 implements OnInit {
+  forSubject1 = inject(ForSubject);
+  forSubject1Data = signal<string[]>([]);
+  ngOnInit(): void {
+    this.forSubject1.commonSubject$.subscribe({
+      next: (data) => {
+        this.forSubject1Data.set(data);
+      }
+    })
+  }
 }
