@@ -60,6 +60,10 @@ export const routes: Routes = [
         loadComponent:()=>import('./components/api-call/api-call').then(c=>c.ApiCall),
     },
     {
+        path: 'subject',
+        loadComponent:()=>import('./components/subject-comp/subject-comp').then(c=>c.SubjectComp),
+    },
+    {
         path: '**',
         loadComponent:()=>import('./components/no-records/no-records').then(c=>c.NoRecords)
     }
