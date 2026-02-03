@@ -30,13 +30,14 @@ export class ApiCall implements OnInit, OnDestroy {
     });    
   }
   commentFun(): Observable<any> {
-    return this.http.get(this.apiUrl).pipe(      
+    return this.http.get(this.apiUrl).pipe(
       map((comments:any) => {
         return comments.filter((val:any) => {
           return val.postId === 1;
         });
       }),
     );
+    // return this.http.get(this.apiUrl);
   }
   ngOnDestroy(): void {
     if(this.receivedComments) {
