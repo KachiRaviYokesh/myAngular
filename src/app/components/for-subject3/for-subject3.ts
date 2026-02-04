@@ -17,4 +17,7 @@ export class ForSubject3 implements OnInit {
       }
     });
   }
+  thirdRight() {
+    this.forSubject3.commonSubject$.next(['THIRD', 'RIGHT']);
+  }
 }

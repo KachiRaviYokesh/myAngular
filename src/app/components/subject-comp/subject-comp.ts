@@ -33,6 +33,6 @@ export class SubjectComp implements OnInit {
 
   protected updateFirstSubjectData() {
     this.firstSubVariable$.next('second');
-    this.forSubject.commonUpdate(['NEW','-','VALUE']);
+    this.forSubject.commonUpdate(['NEW', 'VALUE']);
   }
 }

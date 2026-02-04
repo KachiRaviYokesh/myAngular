@@ -17,4 +17,7 @@ export class ForSubject2 implements OnInit {
       }
     });
   }
+  secondMiddle() {
+    this.forSubject2.commonSubject$.next(['SECOND', 'MIDDLE']);
+  }
 }
