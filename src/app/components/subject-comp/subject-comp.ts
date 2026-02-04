@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { ForSubject1 } from "../for-subject1/for-subject1";
 import { ForSubject2 } from "../for-subject2/for-subject2";
 import { ForSubject3 } from "../for-subject3/for-subject3";
-import { ForSubject } from '../../services/for-subject';
+import { ForSubjectService } from '../../services/for-subject-service';
 
 @Component({
   selector: 'app-subject-comp',
@@ -14,16 +14,15 @@ import { ForSubject } from '../../services/for-subject';
 export class SubjectComp implements OnInit {  
   firstSubData = signal<string>('');
   firstSubVariable$ = new Subject<string>();
-  forSubject = inject(ForSubject);
+  forSubject = inject(ForSubjectService);
 
   ngOnInit(): void {
     this.firstSubVariable$.subscribe({
       next: (data) => {
         this.firstSubData.set(data.toUpperCase());
-        console.log('Data :', data);        
       },
       error: (error) => {
-        console.log('Error : ', error);        
+        console.log('Error : ', error);
       },
       complete: () => {
         console.log('Completed');
@@ -34,6 +33,6 @@ export class SubjectComp implements OnInit {
 
   protected updateFirstSubjectData() {
     this.firstSubVariable$.next('second');
-    this.forSubject.commonUpdate(['NEW','-','UPDATE']);
+    this.forSubject.commonUpdate(['NEW','-','VALUE']);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ForSubject } from '../../services/for-subject';
+import { ForSubjectService } from '../../services/for-subject-service';
 
 @Component({
   selector: 'app-for-subject1',
@@ -8,9 +8,10 @@ import { ForSubject } from '../../services/for-subject';
   styles: ``,
 })
 export class ForSubject1 implements OnInit {
-  forSubject1 = inject(ForSubject);
+  forSubject1 = inject(ForSubjectService);
   forSubject1Data = signal<string[]>([]);
   ngOnInit(): void {
+    this.forSubject1.initialUpdate();
     this.forSubject1.commonSubject$.subscribe({
       next: (data) => {
         this.forSubject1Data.set(data);

@@ -1,15 +1,17 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ForSubject implements OnInit {
+export class ForSubjectService {
   commonSubject$ = new Subject<string[]>();
-  // ngOnInit(): void {
-  //   this.commonSubject$.next(['update']);
-  // }
+  initialUpdate() {
+    setTimeout(()=>{
+      this.commonSubject$.next(['INITIAL', '-', 'VALUE'])
+    }, 0);
+  }
   commonUpdate(receivedString:string[]) {
     this.commonSubject$.next(receivedString);
-  }
+  } 
 }
