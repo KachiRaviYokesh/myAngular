@@ -30,3 +30,16 @@
         <app-for-subject3 [from]="'behavior subject'"></app-for-subject3>
     </div>
 </div>
+<div class="flex items-center gap-10 px-10 py-2 border rounded">
+    <div>
+        <button class="bg-blue-500 text-blue-50 rounded px-4 py-2 text-xs font-medium" (click)="renderNewComponent()">Render New Component</button>
+    </div>
+</div>
+
+<div class="flex justify-center items-stretch gap-10 h-60 px-10 py-10 border rounded bg-gray-100">
+    @if(newComponent()) {
+        <div class="w-1/3 border bg-white">
+            <app-for-subject4 [from]="'behavior subject'"></app-for-subject4>
+        </div>
+    }
+</div>
