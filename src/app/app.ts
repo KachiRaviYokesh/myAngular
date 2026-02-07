@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { LoaderService } from './services/loader-service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {  
+export class App implements OnInit {
+  isLoaderVisible = inject(LoaderService);
   isSidePanelExpanded = signal<boolean>(true);
+  loaderStatus = signal<boolean>(false);
+  ngOnInit(): void {
+    this.loaderStatus = this.isLoaderVisible.isLoaderShowing;
+  }
   toggleSidePanel() {
     this.isSidePanelExpanded.update((lastVal)=>{return !lastVal;})
   }

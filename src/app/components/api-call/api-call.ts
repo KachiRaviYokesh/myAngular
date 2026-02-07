@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
+import { LoaderService } from '../../services/loader-service';
 
 @Component({
   selector: 'app-api-call',
@@ -12,13 +13,17 @@ export class ApiCall implements OnInit, OnDestroy {
   public apiUrl = 'https://jsonplaceholder.typicode.com/comments';
   public receivedDatas = signal<any[]>([]);
   public receivedComments?:Subscription;
+  public isLoaderVisible = inject(LoaderService);
   constructor(
     private http: HttpClient,
-  ) {}
+  ) {
+    this.isLoaderVisible.isLoaderShowing.set(true);
+  }
   ngOnInit(): void {
     this.receivedComments = this.commentFun().subscribe({
       next: (data) => {
         this.receivedDatas.set(data);
+        this.isLoaderVisible.isLoaderShowing.set(false);
         console.log('next: ', data);
       },
       error: (e) => {
