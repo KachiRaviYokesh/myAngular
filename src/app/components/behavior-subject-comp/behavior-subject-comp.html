@@ -3,9 +3,9 @@
         <div class="rounded-md 
         bg-green-500 px-2 py-1 text-xs font-medium mb-2
         text-green-50 inset-ring inset-ring-green-600/20">
-            firstSubjectData
+            firstBehaviorSubjectData
         </div>
-        @for(data of firstSubData(); track data) {
+        @for(data of firstBehaviorSubData(); track data) {
             <span class="inline-flex items-center rounded-md 
             bg-green-500 px-2 py-1 text-xs font-medium mr-2
             text-green-50 inset-ring inset-ring-green-600/20">
@@ -15,18 +15,18 @@
     </div>
 
     <div>
-        <button class="bg-blue-500 text-blue-50 rounded px-4 py-2 text-xs font-medium" (click)="updateFirstSubjectData()">Update Subject Value</button>
+        <button class="bg-blue-500 text-blue-50 rounded px-4 py-2 text-xs font-medium" (click)="updateFirstBehaviorSubjectData()">Update Subject Value</button>
     </div>
 </div>
 
 <div class="flex justify-center items-stretch gap-10 h-60 px-10 py-10 border rounded bg-gray-100">
     <div class="flex-grow border bg-white">
-        <app-for-subject1 [from]="'subject'"></app-for-subject1>
+        <app-for-subject1 [from]="'behavior subject'"></app-for-subject1>
     </div>
     <div class="flex-grow border bg-white">
-        <app-for-subject2 [from]="'subject'"></app-for-subject2>
+        <app-for-subject2 [from]="'behavior subject'"></app-for-subject2>
     </div>
     <div class="flex-grow border bg-white">
-        <app-for-subject3 [from]="'subject'"></app-for-subject3>
+        <app-for-subject3 [from]="'behavior subject'"></app-for-subject3>
     </div>
 </div>

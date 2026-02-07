@@ -28,7 +28,7 @@ export class SubjectComp implements OnInit {
         console.log('Completed');
       }
     });
-    this.firstSubVariable$.next('first');
+    // this.firstSubVariable$.next('first');
   }
 
   protected updateFirstSubjectData() {

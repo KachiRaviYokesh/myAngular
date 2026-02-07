@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
-import { map, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-api-call',

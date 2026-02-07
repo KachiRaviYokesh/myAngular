@@ -6,6 +6,7 @@ import { isObservable, Subject } from 'rxjs';
 })
 export class ForSubjectService {
   commonSubject$ = new Subject<string[]>();
+  copyOfCommonSubject$ = this.commonSubject$.asObservable();
   // initialUpdate() {
   //   setTimeout(()=>{
   //     this.commonSubject$.next(['INITIAL', 'VALUE'])

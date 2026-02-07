@@ -1,5 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnInit, signal } from '@angular/core';
 import { ForSubjectService } from '../../services/for-subject-service';
+import { ForBehaviorSubjectService } from '../../services/for-behavior-subject-service';
 
 @Component({
   selector: 'app-for-subject3',
@@ -8,16 +9,29 @@ import { ForSubjectService } from '../../services/for-subject-service';
   styles: ``,
 })
 export class ForSubject3 implements OnInit {
+  @Input() from!:string;
   forSubject3 = inject(ForSubjectService);
   forSubject3Data = signal<string[]>([]);
+  forBehaviorSubject3 = inject(ForBehaviorSubjectService);
+  forBehaviorSubject3Data = signal<string[]>([]);
   ngOnInit(): void {
-    this.forSubject3.commonSubject$.subscribe({
+    this.forSubject3.copyOfCommonSubject$.subscribe({
       next: (data) => {
         this.forSubject3Data.set(data);
       }
     });
+    this.forBehaviorSubject3.copyOfCommonBehaviorSubject$.subscribe({
+      next: (data) => {
+        this.forBehaviorSubject3Data.set(data);
+      }
+    });
   }
-  thirdRight() {
-    this.forSubject3.commonSubject$.next(['THIRD', 'RIGHT']);
+  thirdRight(from:string) {
+    if(from === 'sub') {
+      this.forSubject3.commonSubject$.next(['THIRD', 'RIGHT']);
+    }
+    else if(from === 'besub') {
+      this.forBehaviorSubject3.commonBehaviorSubject$.next(['THIRD', 'RIGHT']);
+    }
   }
 }

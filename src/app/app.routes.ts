@@ -64,6 +64,10 @@ export const routes: Routes = [
         loadComponent:()=>import('./components/subject-comp/subject-comp').then(c=>c.SubjectComp),
     },
     {
+        path: 'behavior-subject',
+        loadComponent: () => import('./components/behavior-subject-comp/behavior-subject-comp').then(c => c.BehaviorSubjectComp),
+    },
+    {
         path: '**',
         loadComponent:()=>import('./components/no-records/no-records').then(c=>c.NoRecords)
     }
