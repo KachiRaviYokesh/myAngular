@@ -10,6 +10,7 @@ import { LoaderService } from '../../services/loader-service';
   styles: ``,
 })
 export class ApiCall implements OnInit, OnDestroy {
+  // public apiUrl = 'https://jsonplaceholder.typicode.com/comments?postId=2';
   public apiUrl = 'https://jsonplaceholder.typicode.com/comments';
   public receivedDatas = signal<any[]>([]);
   public receivedComments?:Subscription;
@@ -35,14 +36,14 @@ export class ApiCall implements OnInit, OnDestroy {
     });    
   }
   commentFun(): Observable<any> {
-    return this.http.get(this.apiUrl).pipe(
-      map((comments:any) => {
-        return comments.filter((val:any) => {
-          return val.postId === 1;
-        });
-      }),
-    );
-    // return this.http.get(this.apiUrl);
+    // return this.http.get(this.apiUrl).pipe(
+    //   map((comments:any) => {
+    //     return comments.filter((val:any) => {
+    //       return val.postId === 1;
+    //     });
+    //   }),
+    // );
+    return this.http.get(this.apiUrl);
   }
   ngOnDestroy(): void {
     if(this.receivedComments) {
