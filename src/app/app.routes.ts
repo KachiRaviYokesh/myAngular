@@ -68,6 +68,10 @@ export const routes: Routes = [
         loadComponent: () => import('./components/behavior-subject-comp/behavior-subject-comp').then(c => c.BehaviorSubjectComp),
     },
     {
+        path: 'reactive-form',
+        loadComponent: () => import('./components/react-form/react-form').then(c => c.ReactForm)
+    },
+    {
         path: '**',
         loadComponent:()=>import('./components/no-records/no-records').then(c=>c.NoRecords)
     }
