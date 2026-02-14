@@ -10,8 +10,8 @@ import { filter } from 'rxjs';
 })
 export class ReactForm implements OnInit {
   public customReactiveForm!: FormGroup;
-  public recordss!: FormArray;
-  public rolePreferencee!: FormArray;
+  public recordsFormArray!: FormArray;
+  public stableRecordsArray: any[] = []; 
   public rolesList =  [
     {
       key: 'batsman',
@@ -32,6 +32,7 @@ export class ReactForm implements OnInit {
   ];
 
   ngOnInit(): void {
+
     this.customReactiveForm = new FormGroup({
       playerName: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -40,40 +41,69 @@ export class ReactForm implements OnInit {
       country: new FormControl(null, Validators.required),
       gender: new FormControl(null, Validators.required),
       extraDetail: new FormControl(false),
-      rolePreference: new FormArray([]),
-      records: new FormArray([]),
     });
-    this.recordss = this.customReactiveForm.get('records') as FormArray;
-    this.rolePreferencee = this.customReactiveForm.get('rolePreference') as FormArray;
-    this.rolesList.forEach((item)=>{
-      this.rolePreferencee.push(
-        new FormControl(false, Validators.required)
-      );
+
+    this.customReactiveForm.get('extraDetail')?.valueChanges.subscribe((value)=>{
+      console.log(value, 'VALUE');
+      if(value) {
+        const roleArray = new FormArray(
+          this.rolesList.map(() => new FormControl(false))
+        );
+        this.customReactiveForm.addControl('rolePreference', roleArray);
+      }
+      else {
+        this.customReactiveForm.removeControl('rolePreference');
+      }
+    });
+
+    this.customReactiveForm.get('records')?.valueChanges.subscribe((val: any) => {
+      this.stableRecordsArray = val;
     });
   }
+
   formSubmission() {
-    this.mapRolePrefer();    
     console.log(this.customReactiveForm.value);
   }
-  mapRolePrefer() {
-    this.customReactiveForm.value.rolePreference = this.customReactiveForm.value.rolePreference
-    .map((status: boolean , index:number)=>{
-      return status ? this.rolesList[index] : null;
-    })
-    .filter((val: string | null)=>{
-      return val !== null;
-    });
-  }
+
+  // mapRolePrefer() {
+  //   this.customReactiveForm.value.rolePreference = this.customReactiveForm.value.rolePreference
+  //   .map((status: boolean , index:number)=>{
+  //     return status ? this.rolesList[index] : null;
+  //   })
+  //   .filter((val: string | null)=>{
+  //     return val !== null;
+  //   });
+  // }
+
   addRecords() {
-    this.recordss.push(
+    if(!(this.customReactiveForm.contains('records'))) {
+      const recordsArray = new FormArray([]);
+      this.customReactiveForm.addControl('records', recordsArray);
+      this.recordsFormArray = this.customReactiveForm.get('records') as FormArray;
+      this.pushRecords();
+    }
+    else {
+      this.pushRecords();
+    }
+  }
+  
+  pushRecords() {
+    this.recordsFormArray.push(
       new FormGroup({
         recordDate: new FormControl(null, Validators.required),
         record: new FormControl(null, Validators.required),
         opponentCountry: new FormControl(null, Validators.required),
-      }),
+      }),      
     );
+    this.updateStableRecordsArray()
   }
-  removeRecords(index: number) {
-    this.recordss.removeAt(index);
+  
+  removeRecords(index:number) {
+    this.recordsFormArray.removeAt(index);
+    this.updateStableRecordsArray()
+  }
+
+  private updateStableRecordsArray() {
+    this.stableRecordsArray = this.recordsFormArray.value;
   }
 }
