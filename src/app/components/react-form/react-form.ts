@@ -100,7 +100,10 @@ export class ReactForm implements OnInit {
   
   removeRecords(index:number) {
     this.recordsFormArray.removeAt(index);
-    this.updateStableRecordsArray()
+    if(this.customReactiveForm.get('records')?.value.length === 0) {
+      this.customReactiveForm.removeControl('records');
+    }
+    this.updateStableRecordsArray();
   }
 
   private updateStableRecordsArray() {
