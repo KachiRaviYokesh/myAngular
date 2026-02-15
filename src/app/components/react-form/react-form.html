@@ -1,42 +1,42 @@
-<div class="hidden">
-    <!-- <div>
+<!-- <div class="hidden">
+    <div>
         <input type="text" placeholder="Enter name">
-    </div> -->
-    <!-- <div>
+    </div>
+    <div>
         <input type="email" placeholder="email@example.com">
-    </div> -->
+    </div>
     <div>
         <input type="password" placeholder="Enter password">
     </div>
-    <!-- <div>
+    <div>
         <input type="number" min="1" max="100">
-    </div> -->
-    <!-- <div>
+    </div>
+    <div>
         <input type="date">
-    </div> -->
+    </div>
     <div>
         <input type="time">
     </div>
     <div>
         <input type="datetime-local">
     </div>
-    <!-- <div>
+    <div>
         <input type="submit" value="Submit">
-    </div> -->
-    <!-- <div>
+    </div>
+    <div>
         <input type="radio" name="gender"> Male
         <input type="radio" name="gender"> Female
-    </div> -->
-    <!-- <div>
+    </div>
+    <div>
         <input type="checkbox"> I agree
-    </div> -->
+    </div>
     <div>
         <input type="file">
     </div>
     <div>
         <input type="search" placeholder="Search...">
     </div>
-</div>
+</div> -->
 
 <!-- (ngSubmit)="formSubmission()" -->
 <form [formGroup]="customReactiveForm" (ngSubmit)="formSubmission()" class="flex flex-col h-full w-full justify-start overflow-hidden">
@@ -46,7 +46,7 @@
                 <label class="text-xs font-medium text-gray-400">Player name</label>
                 <input type="text" formControlName="playerName"
                     class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                @if(customReactiveForm.get('playerName')?.invalid && customReactiveForm.get('playerName')?.touched) {
+                @if(fieldsControlObj.playerName.invalid && fieldsControlObj.playerName.touched) {
                     <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
                 }
             </div>

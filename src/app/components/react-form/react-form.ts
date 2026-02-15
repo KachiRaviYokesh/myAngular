@@ -1,6 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { filter } from 'rxjs';
+// import { filter } from 'rxjs';
+
+export interface formGroupObj {
+  recordDate: FormControl<string | null>,
+  record: FormControl<string | null>,
+  opponentCountry: FormControl<string | null>,
+}
+
+export interface mainFormGroup {
+  playerName: FormControl<string | null>,
+  email: FormControl<string | null>,
+  mobileNumber: FormControl<number | null>,
+  dateOfBirth: FormControl<string | null>,
+  country: FormControl<string | null>,
+  gender: FormControl<string | null>,
+  extraDetail: FormControl<boolean>,
+  rolePreference?: FormArray<FormControl<boolean>>,
+  records?: FormArray<FormGroup<formGroupObj>>,
+}
+
+export interface stableRecordsObj {
+  recordDate: FormControl<string | null>,
+  record: FormControl<string | null>,
+  opponentCountry: FormControl<string | null>,
+}
 
 @Component({
   selector: 'app-react-form',
@@ -9,9 +33,17 @@ import { filter } from 'rxjs';
   styles: ``,
 })
 export class ReactForm implements OnInit {
-  public customReactiveForm!: FormGroup;
+  public customReactiveForm: FormGroup<mainFormGroup> = new FormGroup<mainFormGroup>({
+    playerName: new FormControl<string | null>(null, Validators.required),
+    email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
+    mobileNumber: new FormControl<number | null>(null, Validators.required),
+    dateOfBirth: new FormControl<string | null>(null, Validators.required),
+    country: new FormControl<string | null>(null, Validators.required),
+    gender: new FormControl<string | null>(null, Validators.required),
+    extraDetail: new FormControl<boolean>(false, { nonNullable:true }),
+  });
   public recordsFormArray!: FormArray;
-  public stableRecordsArray: any[] = []; 
+  public stableRecordsArray: stableRecordsObj[] | null = []; 
   public rolesList =  [
     {
       key: 'batsman',
@@ -30,24 +62,16 @@ export class ReactForm implements OnInit {
       label: 'Wicket Keeper',
     },
   ];
+  get fieldsControlObj() {
+    return this.customReactiveForm.controls;
+  }
 
   ngOnInit(): void {
 
-    this.customReactiveForm = new FormGroup({
-      playerName: new FormControl(null, Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      mobileNumber: new FormControl(null, Validators.required),
-      dateOfBirth: new FormControl(null, Validators.required),
-      country: new FormControl(null, Validators.required),
-      gender: new FormControl(null, Validators.required),
-      extraDetail: new FormControl(false),
-    });
-
     this.customReactiveForm.get('extraDetail')?.valueChanges.subscribe((value)=>{
-      console.log(value, 'VALUE');
       if(value) {
         const roleArray = new FormArray(
-          this.rolesList.map(() => new FormControl(false))
+          this.rolesList.map(() => new FormControl(false, { nonNullable:true }))
         );
         this.customReactiveForm.addControl('rolePreference', roleArray);
       }
@@ -56,9 +80,6 @@ export class ReactForm implements OnInit {
       }
     });
 
-    this.customReactiveForm.get('records')?.valueChanges.subscribe((val: any) => {
-      this.stableRecordsArray = val;
-    });
   }
 
   formSubmission() {
@@ -77,7 +98,7 @@ export class ReactForm implements OnInit {
 
   addRecords() {
     if(!(this.customReactiveForm.contains('records'))) {
-      const recordsArray = new FormArray([]);
+      const recordsArray = new FormArray<FormGroup<formGroupObj>>([]);
       this.customReactiveForm.addControl('records', recordsArray);
       this.recordsFormArray = this.customReactiveForm.get('records') as FormArray;
       this.pushRecords();
@@ -100,13 +121,18 @@ export class ReactForm implements OnInit {
   
   removeRecords(index:number) {
     this.recordsFormArray.removeAt(index);
-    if(this.customReactiveForm.get('records')?.value.length === 0) {
+    if(!this.recordsFormArray.length) {
       this.customReactiveForm.removeControl('records');
     }
     this.updateStableRecordsArray();
   }
 
   private updateStableRecordsArray() {
-    this.stableRecordsArray = this.recordsFormArray.value;
+    if(this.recordsFormArray.value.length) {
+      this.stableRecordsArray = this.recordsFormArray.value;
+    }
+    else {
+      this.stableRecordsArray = null;
+    }
   }
 }
