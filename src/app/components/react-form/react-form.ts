@@ -20,12 +20,6 @@ export interface mainFormGroup {
   records?: FormArray<FormGroup<formGroupObj>>,
 }
 
-export interface stableRecordsObj {
-  recordDate: FormControl<string | null>,
-  record: FormControl<string | null>,
-  opponentCountry: FormControl<string | null>,
-}
-
 @Component({
   selector: 'app-react-form',
   imports: [ReactiveFormsModule],
@@ -33,6 +27,7 @@ export interface stableRecordsObj {
   styles: ``,
 })
 export class ReactForm implements OnInit {
+
   public customReactiveForm: FormGroup<mainFormGroup> = new FormGroup<mainFormGroup>({
     playerName: new FormControl<string | null>(null, Validators.required),
     email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
@@ -42,8 +37,11 @@ export class ReactForm implements OnInit {
     gender: new FormControl<string | null>(null, Validators.required),
     extraDetail: new FormControl<boolean>(false, { nonNullable:true }),
   });
-  public recordsFormArray!: FormArray;
-  public stableRecordsArray: stableRecordsObj[] | null = []; 
+
+  get recordsFormArray(): FormArray<FormGroup<formGroupObj>> {
+    return this.customReactiveForm.controls.records!;
+  }
+
   public rolesList =  [
     {
       key: 'batsman',
@@ -62,18 +60,22 @@ export class ReactForm implements OnInit {
       label: 'Wicket Keeper',
     },
   ];
+
   get fieldsControlObj() {
     return this.customReactiveForm.controls;
   }
 
-  ngOnInit(): void {
+  public dynamicRecordsArray = new FormArray<FormGroup<formGroupObj>>([]);
 
-    this.customReactiveForm.get('extraDetail')?.valueChanges.subscribe((value)=>{
-      if(value) {
-        const roleArray = new FormArray(
+  public playerRoleArray = new FormArray(
           this.rolesList.map(() => new FormControl(false, { nonNullable:true }))
         );
-        this.customReactiveForm.addControl('rolePreference', roleArray);
+
+  ngOnInit(): void {
+
+    this.customReactiveForm.controls.extraDetail.valueChanges.subscribe((value)=>{
+      if(value) {
+        this.customReactiveForm.addControl('rolePreference', this.playerRoleArray);
       }
       else {
         this.customReactiveForm.removeControl('rolePreference');
@@ -97,42 +99,37 @@ export class ReactForm implements OnInit {
   // }
 
   addRecords() {
-    if(!(this.customReactiveForm.contains('records'))) {
-      const recordsArray = new FormArray<FormGroup<formGroupObj>>([]);
-      this.customReactiveForm.addControl('records', recordsArray);
-      this.recordsFormArray = this.customReactiveForm.get('records') as FormArray;
+
+    if(!this.fieldsControlObj.records) {
+      this.customReactiveForm.addControl('records', this.dynamicRecordsArray);
       this.pushRecords();
     }
     else {
       this.pushRecords();
     }
+
   }
   
   pushRecords() {
+
     this.recordsFormArray.push(
-      new FormGroup({
-        recordDate: new FormControl(null, Validators.required),
-        record: new FormControl(null, Validators.required),
-        opponentCountry: new FormControl(null, Validators.required),
+      new FormGroup<formGroupObj>({
+        recordDate: new FormControl<string | null>(null, Validators.required),
+        record: new FormControl<string | null>(null, Validators.required),
+        opponentCountry: new FormControl<string | null>(null, Validators.required),
       }),      
     );
-    this.updateStableRecordsArray()
+
   }
   
   removeRecords(index:number) {
+
     this.recordsFormArray.removeAt(index);
+    
     if(!this.recordsFormArray.length) {
       this.customReactiveForm.removeControl('records');
     }
-    this.updateStableRecordsArray();
+
   }
 
-  private updateStableRecordsArray() {
-    if(this.recordsFormArray.value.length) {
-      this.stableRecordsArray = this.recordsFormArray.value;
-    }
-    else {
-      this.stableRecordsArray = null;
-    }
-  }
 }
