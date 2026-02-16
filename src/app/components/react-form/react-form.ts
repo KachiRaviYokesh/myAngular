@@ -30,7 +30,7 @@ export class ReactForm implements OnInit {
 
   public customReactiveForm: FormGroup<mainFormGroup> = new FormGroup<mainFormGroup>({
     playerName: new FormControl<string | null>(null, Validators.required),
-    email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
+    email: new FormControl<string | null>(null, { validators: [Validators.required, Validators.email], updateOn: 'blur' }),
     mobileNumber: new FormControl<number | null>(null, Validators.required),
     dateOfBirth: new FormControl<string | null>(null, Validators.required),
     country: new FormControl<string | null>(null, Validators.required),
@@ -79,7 +79,7 @@ export class ReactForm implements OnInit {
   }
 
   formSubmission() {
-    console.log(this.customReactiveForm.value);
+    console.log(this.customReactiveForm);
   }
 
   // mapRolePrefer() {

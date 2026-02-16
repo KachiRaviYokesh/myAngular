@@ -46,7 +46,7 @@
                 <label class="text-xs font-medium text-gray-400">Player name</label>
                 <input type="text" formControlName="playerName"
                     class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                @if(fieldsControlObj.playerName.invalid && fieldsControlObj.playerName.touched) {
+                @if(fieldsControlObj.playerName.hasError('required') && fieldsControlObj.playerName.touched) {
                     <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
                 }
             </div>
@@ -54,16 +54,28 @@
                 <label class="text-xs font-medium text-gray-400">Email address</label>
                 <input type="email" formControlName="email"
                     class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
+                @if(fieldsControlObj.email.hasError('required') && fieldsControlObj.email.touched) {
+                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                }
+                @if(fieldsControlObj.email.hasError('email')) {
+                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Maintain Format</span>
+                }
             </div>
             <div class="col-span-3 relative pb-4">
                 <label class="text-xs font-medium text-gray-400">Mobile Number</label>
                 <input type="number" formControlName="mobileNumber"
                     class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
+                @if(fieldsControlObj.mobileNumber.hasError('required') && fieldsControlObj.mobileNumber.touched) {
+                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                }
             </div>
             <div class="col-span-3 relative pb-4">
                 <label class="text-xs font-medium text-gray-400">DOB</label>
                 <input type="date" formControlName="dateOfBirth"
                     class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
+                @if(fieldsControlObj.dateOfBirth.hasError('required') && fieldsControlObj.dateOfBirth.touched) {
+                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                }
             </div>
             <div class="col-span-3 relative pb-4">
                 <label class="text-xs font-medium text-gray-400">Country</label>
@@ -75,6 +87,9 @@
                     <option value="New Zealand">New Zealand</option>
                     <option value="South Africa">South Africa</option>
                 </select>
+                @if(fieldsControlObj.country.hasError('required') && fieldsControlObj.country.touched) {
+                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                }
             </div>
             <div class="col-span-4 relative pb-4 flex flex-col">
                 <label class="text-xs font-medium text-gray-400">Gender</label>
@@ -128,18 +143,24 @@
             }
             @if(fieldsControlObj.records) {
                 <div class="col-span-12" formArrayName="records">
-                    @for(item of fieldsControlObj.records.controls; track item; let index = $index) {
+                    @for(item of recordsFormArray.controls; track item; let index = $index) {
                         <div [formGroupName]="index" class="border border-indigo-600 px-2 pt-1">
                             <div class="grid grid-cols-12 gap-3">
                                 <div class="col-span-3 relative pb-4 flex flex-col items-start gap-1">
                                     <label class="text-xs font-medium text-gray-400">Record Date</label>
                                     <input type="date" formControlName="recordDate"
                                         class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
+                                    @if(item.controls.recordDate.hasError('required') && item.controls.recordDate.touched) {
+                                        <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                                    }
                                 </div>
                                 <div class="col-span-4 relative pb-4 flex flex-col items-start gap-1">
                                     <label for="about" class="text-xs font-medium text-gray-400">Record</label>
                                     <textarea id="about" formControlName="record"
                                         class="w-full flex-grow rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none"></textarea>
+                                    @if(item.controls.record.hasError('required') && item.controls.record.touched) {
+                                        <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                                    }
                                 </div>
                                 <div class="col-span-3 relative pb-4 flex flex-col items-start gap-1">
                                     <label class="text-xs font-medium text-gray-400">Opponent Country</label>
@@ -151,6 +172,9 @@
                                         <option value="New Zealand">New Zealand</option>
                                         <option value="South Africa">South Africa</option>
                                     </select>
+                                    @if(item.controls.opponentCountry.hasError('required') && item.controls.opponentCountry.touched) {
+                                        <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
+                                    }
                                 </div>
                                 <div class="col-span-2 relative pb-4 flex flex-col items-center justify-start gap-1">
                                     <label for="about" class="text-xs font-medium text-gray-400">Actions</label>
@@ -164,9 +188,7 @@
         </div>
     </div>
     <div class="flex items-center justify-end p-3 border-t">
-        <!-- [disabled]="customReactiveForm.invalid" -->
-        <!-- {{customReactiveForm.invalid ? 'bg-gray-300 text-gray-500' : 'bg-indigo-600 text-white'}} -->
-        <input type="submit" value="Submit" 
-        class="rounded-md bg-indigo-600 text-white px-3 py-2 text-sm font-semibold">
+        <input type="submit" value="Submit" [disabled]="customReactiveForm.invalid"
+        class="rounded-md px-3 py-2 text-sm font-semibold {{customReactiveForm.invalid ? 'bg-gray-300 text-gray-500' : 'bg-indigo-600 text-white'}}">
     </div>
 </form>
