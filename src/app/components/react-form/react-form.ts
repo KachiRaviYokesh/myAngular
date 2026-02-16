@@ -38,10 +38,6 @@ export class ReactForm implements OnInit {
     extraDetail: new FormControl<boolean>(false, { nonNullable:true }),
   });
 
-  get recordsFormArray(): FormArray<FormGroup<formGroupObj>> {
-    return this.customReactiveForm.controls.records!;
-  }
-
   public rolesList =  [
     {
       key: 'batsman',
@@ -65,17 +61,15 @@ export class ReactForm implements OnInit {
     return this.customReactiveForm.controls;
   }
 
-  public dynamicRecordsArray = new FormArray<FormGroup<formGroupObj>>([]);
-
-  public playerRoleArray = new FormArray(
-          this.rolesList.map(() => new FormControl(false, { nonNullable:true }))
-        );
+  get recordsFormArray(): FormArray<FormGroup<formGroupObj>> {
+    return this.fieldsControlObj.records!;
+  }
 
   ngOnInit(): void {
 
-    this.customReactiveForm.controls.extraDetail.valueChanges.subscribe((value)=>{
+    this.fieldsControlObj.extraDetail.valueChanges.subscribe((value)=>{
       if(value) {
-        this.customReactiveForm.addControl('rolePreference', this.playerRoleArray);
+        this.customReactiveForm.addControl('rolePreference', new FormArray(this.rolesList.map(() => new FormControl(false, { nonNullable:true }))));
       }
       else {
         this.customReactiveForm.removeControl('rolePreference');
@@ -101,7 +95,7 @@ export class ReactForm implements OnInit {
   addRecords() {
 
     if(!this.fieldsControlObj.records) {
-      this.customReactiveForm.addControl('records', this.dynamicRecordsArray);
+      this.customReactiveForm.addControl('records', new FormArray<FormGroup<formGroupObj>>([]));
       this.pushRecords();
     }
     else {
