@@ -1,194 +1,86 @@
-<!-- <div class="hidden">
+<form [formGroup]="mainReactiveForm" (ngSubmit)="formSubmission()">
     <div>
-        <input type="text" placeholder="Enter name">
+        <label for="">First Name : </label>
+        <input type="text" formControlName="personFirstName">
     </div>
     <div>
-        <input type="email" placeholder="email@example.com">
+        <label for="">Email : </label>
+        <input type="email" formControlName="personEmail">
     </div>
     <div>
-        <input type="password" placeholder="Enter password">
+        <label for="">Number : </label>
+        <input type="number" formControlName="personNumber">
     </div>
     <div>
-        <input type="number" min="1" max="100">
+        <label for="">DOB : </label>
+        <input type="date" formControlName="personDOB">
     </div>
     <div>
-        <input type="date">
+        <label for="">Country : </label>
+        <select formControlName="personCountry">
+            <option value="" hidden>Select</option>
+            <option value="Australia">Australia</option>
+            <option value="England">England</option>
+            <option value="India">India</option>
+        </select>
     </div>
     <div>
-        <input type="time">
-    </div>
-    <div>
-        <input type="datetime-local">
-    </div>
-    <div>
-        <input type="submit" value="Submit">
-    </div>
-    <div>
-        <input type="radio" name="gender"> Male
-        <input type="radio" name="gender"> Female
-    </div>
-    <div>
-        <input type="checkbox"> I agree
-    </div>
-    <div>
-        <input type="file">
-    </div>
-    <div>
-        <input type="search" placeholder="Search...">
-    </div>
-</div> -->
-
-<!-- (ngSubmit)="formSubmission()" -->
-<form [formGroup]="customReactiveForm" (ngSubmit)="formSubmission()" class="flex flex-col h-full w-full justify-start overflow-hidden">
-    <div class="flex-grow w-full p-3 overflow-y-auto">
-        <div class="grid grid-cols-12 gap-3">
-            <div class="col-span-3 relative pb-4">
-                <label class="text-xs font-medium text-gray-400">Player name</label>
-                <input type="text" formControlName="playerName"
-                    class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                @if(fieldsControlObj.playerName.hasError('required') && fieldsControlObj.playerName.touched) {
-                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                }
-            </div>
-            <div class="col-span-3 relative pb-4">
-                <label class="text-xs font-medium text-gray-400">Email address</label>
-                <input type="email" formControlName="email"
-                    class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                @if(fieldsControlObj.email.hasError('required') && fieldsControlObj.email.touched) {
-                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                }
-                @if(fieldsControlObj.email.hasError('email')) {
-                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Maintain Format</span>
-                }
-            </div>
-            <div class="col-span-3 relative pb-4">
-                <label class="text-xs font-medium text-gray-400">Mobile Number</label>
-                <input type="number" formControlName="mobileNumber"
-                    class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                @if(fieldsControlObj.mobileNumber.hasError('required') && fieldsControlObj.mobileNumber.touched) {
-                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                }
-            </div>
-            <div class="col-span-3 relative pb-4">
-                <label class="text-xs font-medium text-gray-400">DOB</label>
-                <input type="date" formControlName="dateOfBirth"
-                    class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                @if(fieldsControlObj.dateOfBirth.hasError('required') && fieldsControlObj.dateOfBirth.touched) {
-                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                }
-            </div>
-            <div class="col-span-3 relative pb-4">
-                <label class="text-xs font-medium text-gray-400">Country</label>
-                <select formControlName="country" class="w-full rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-none">
-                    <option value="" hidden>Select</option>
-                    <option value="Australia">Australia</option>
-                    <option value="England">England</option>
-                    <option value="India">India</option>
-                    <option value="New Zealand">New Zealand</option>
-                    <option value="South Africa">South Africa</option>
-                </select>
-                @if(fieldsControlObj.country.hasError('required') && fieldsControlObj.country.touched) {
-                    <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                }
-            </div>
-            <div class="col-span-4 relative pb-4 flex flex-col">
-                <label class="text-xs font-medium text-gray-400">Gender</label>
-                <div class="flex items-center gap-5 mt-3">
-                    <div class="flex items-center gap-x-3">
-                        <input id="male" value="Male" type="radio" formControlName="gender"
-                            class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                        <label for="male" class="block text-sm/6 font-medium text-gray-900">Male</label>
-                    </div>
-                    <div class="flex items-center gap-x-3">
-                        <input id="female" value="Female" type="radio" formControlName="gender"
-                            class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                        <label for="female" class="block text-sm/6 font-medium text-gray-900">Female</label>
-                    </div>
-                    <div class="flex items-center gap-x-3">
-                        <input id="others" value="others" type="radio" formControlName="gender"
-                            class="relative size-4 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                        <label for="others" class="block text-sm/6 font-medium text-gray-900">Others</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-3 relative pb-4 flex flex-col">
-                <label class="text-xs font-medium text-gray-400 mt-1">Extra Details</label>
-                <div class="flex items-center gap-x-2 flex-grow">
-                    <input id="extra-detail" type="checkbox" formControlName="extraDetail"
-                        class="relative size-4 appearance-none rounded border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                    <label for="extra-detail" class="block text-sm/6 font-medium text-gray-900 text-nowrap">
-                        Playable Role
-                    </label>
-                </div>
-            </div>
-            <div class="col-span-2 relative pb-4 flex flex-col items-end justify-start gap-2">
-                <label class="text-xs font-medium text-gray-400 mt-1">Records</label>
-                <button type="button" (click)="addRecords()" class="rounded-md bg-blue-600 px-3 py-1 text-xs font-semibold text-white">Add</button>
-            </div>
-            @if(fieldsControlObj.rolePreference) {
-                <div formArrayName="rolePreference" class="col-span-12 relative border border-indigo-600 px-2 pt-1 pb-5 flex flex-col">
-                    <label class="text-xs font-medium text-gray-400">Role Preference</label>
-                    <div class="flex items-center gap-10 mt-3">
-                        @for(item of rolesList; track item; let index = $index) {
-                            <div class="flex items-center gap-x-2">
-                                <input [id]="item.key" type="checkbox" [formControlName]="index"
-                                    class="relative size-4 appearance-none rounded border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white not-checked:before:hidden checked:border-indigo-600 checked:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden" />
-                                <label [for]="item.key" class="block text-sm/6 font-medium text-gray-900 text-nowrap">
-                                    {{item.label}}
-                                </label>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
-            @if(fieldsControlObj.records) {
-                <div class="col-span-12" formArrayName="records">
-                    @for(item of recordsFormArray.controls; track item; let index = $index) {
-                        <div [formGroupName]="index" class="border border-indigo-600 px-2 pt-1">
-                            <div class="grid grid-cols-12 gap-3">
-                                <div class="col-span-3 relative pb-4 flex flex-col items-start gap-1">
-                                    <label class="text-xs font-medium text-gray-400">Record Date</label>
-                                    <input type="date" formControlName="recordDate"
-                                        class="w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none" />
-                                    @if(item.controls.recordDate.hasError('required') && item.controls.recordDate.touched) {
-                                        <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                                    }
-                                </div>
-                                <div class="col-span-4 relative pb-4 flex flex-col items-start gap-1">
-                                    <label for="about" class="text-xs font-medium text-gray-400">Record</label>
-                                    <textarea id="about" formControlName="record"
-                                        class="w-full flex-grow rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-none"></textarea>
-                                    @if(item.controls.record.hasError('required') && item.controls.record.touched) {
-                                        <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                                    }
-                                </div>
-                                <div class="col-span-3 relative pb-4 flex flex-col items-start gap-1">
-                                    <label class="text-xs font-medium text-gray-400">Opponent Country</label>
-                                    <select formControlName="opponentCountry" class="w-full rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-none">
-                                        <option value="" hidden>Select</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="England">England</option>
-                                        <option value="India">India</option>
-                                        <option value="New Zealand">New Zealand</option>
-                                        <option value="South Africa">South Africa</option>
-                                    </select>
-                                    @if(item.controls.opponentCountry.hasError('required') && item.controls.opponentCountry.touched) {
-                                        <span class="text-xs text-red-600 font-medium truncate absolute bottom-0 left-0">Required Field</span>
-                                    }
-                                </div>
-                                <div class="col-span-2 relative pb-4 flex flex-col items-center justify-start gap-1">
-                                    <label for="about" class="text-xs font-medium text-gray-400">Actions</label>
-                                    <button type="button" (click)="removeRecords(index)" class="rounded-md bg-red-600 px-3 py-1 text-xs font-semibold text-white">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
+        <label for="">Gender : </label>
+        <div>
+            <input type="radio" value="male" formControlName="personGender">Male
+            <input type="radio" value="female" formControlName="personGender">Female
+            <input type="radio" value="others" formControlName="personGender">Others
         </div>
     </div>
-    <div class="flex items-center justify-end p-3 border-t">
-        <input type="submit" value="Submit" [disabled]="customReactiveForm.invalid"
-        class="rounded-md px-3 py-2 text-sm font-semibold {{customReactiveForm.invalid ? 'bg-gray-300 text-gray-500' : 'bg-indigo-600 text-white'}}">
+    <div>
+        <label for="">Extra Details : </label>
+        <input type="checkbox" formControlName="personExtraDetails">Role
+    </div>
+    @if(mainReactiveForm.controls.personExtraDetails.value) {
+        <div>
+            <label for="">Roles</label>
+            <div formArrayName="personRoles">
+                @for(item of rolesList; track item; let index = $index) {
+                    <input type="checkbox" value="{{item}}" [formControlName]="index">{{item}}
+                }
+            </div>
+        </div>
+    }
+    <div>
+        <label for="">Records</label>
+        <button type="button" (click)="addRecords()" class="border border-black px-2 py-1">Add</button>
+    </div>
+    @if(this.mainReactiveForm.controls.personRecords) {
+        @for(item of this.mainReactiveForm.controls.personRecords.controls; track item; let index = $index) {
+            <div>
+                <div>
+                    <label for="">Record Date</label>
+                    <input type="date">
+                </div>
+                <div>
+                    <label for="">Record</label>
+                    <textarea></textarea>
+                </div>
+                <div>
+                    <label for="">Opponent Country</label>
+                    <select>
+                        <option value="" hidden>Select</option>
+                        <option value="Australia">Australia</option>
+                        <option value="England">England</option>
+                        <option value="India">India</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="">Remove</label>
+                    <button type="button" (click)="removeRecords(index)" class="border border-black px-2 py-1">Delete</button>
+                </div>
+            </div>
+        }
+    }
+    <div>
+        <input type="submit" value="Submit" class="border border-black px-3 py-2">
+        @if(this.mainReactiveForm.invalid && this.mainReactiveForm.touched) {
+            <span>Form Invalid</span>
+        }
     </div>
 </form>

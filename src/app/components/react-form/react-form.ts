@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-// import { filter } from 'rxjs';
 
-export interface formGroupObj {
+interface mainFormTypes {
+  personFirstName: FormControl<string | null>,
+  personEmail: FormControl<string | null>,
+  personNumber: FormControl<number | null>,
+  personDOB: FormControl<string | null>,
+  personCountry: FormControl<string | null>,
+  personGender: FormControl<string | null>,
+  personExtraDetails: FormControl<boolean>,
+  personRoles?: FormArray<FormControl<boolean>>,
+  personRecords?: FormArray<FormGroup<recordsControl>>,
+}
+
+interface recordsControl {
   recordDate: FormControl<string | null>,
   record: FormControl<string | null>,
   opponentCountry: FormControl<string | null>,
-}
-
-export interface mainFormGroup {
-  playerName: FormControl<string | null>,
-  email: FormControl<string | null>,
-  mobileNumber: FormControl<number | null>,
-  dateOfBirth: FormControl<string | null>,
-  country: FormControl<string | null>,
-  gender: FormControl<string | null>,
-  extraDetail: FormControl<boolean>,
-  rolePreference?: FormArray<FormControl<boolean>>,
-  records?: FormArray<FormGroup<formGroupObj>>,
 }
 
 @Component({
@@ -27,103 +26,51 @@ export interface mainFormGroup {
   styles: ``,
 })
 export class ReactForm implements OnInit {
-
-  public customReactiveForm: FormGroup<mainFormGroup> = new FormGroup<mainFormGroup>({
-    playerName: new FormControl<string | null>(null, Validators.required),
-    email: new FormControl<string | null>(null, { validators: [Validators.required, Validators.email], updateOn: 'blur' }),
-    mobileNumber: new FormControl<number | null>(null, Validators.required),
-    dateOfBirth: new FormControl<string | null>(null, Validators.required),
-    country: new FormControl<string | null>(null, Validators.required),
-    gender: new FormControl<string | null>(null, Validators.required),
-    extraDetail: new FormControl<boolean>(false, { nonNullable:true }),
+  rolesList = ['Batsman', 'Bowler', 'Captain', 'Wicket-Keeper'];
+  mainReactiveForm = new FormGroup<mainFormTypes>({
+    personFirstName: new FormControl(null, {validators: Validators.required}),
+    personEmail: new FormControl(null, {validators: [Validators.required, Validators.email]}),
+    personNumber: new FormControl(null, {validators: Validators.required}),
+    personDOB: new FormControl(null, {validators: Validators.required}),
+    personCountry: new FormControl(null, {validators: Validators.required}),
+    personGender: new FormControl(null, {validators: Validators.required}),
+    personExtraDetails: new FormControl(false, {nonNullable:true}),
   });
-
-  public rolesList =  [
-    {
-      key: 'batsman',
-      label: 'Batsman',
-    },
-    {
-      key: 'bowler',
-      label: 'Bowler',
-    },
-    {
-      key: 'captain',
-      label: 'Captain',
-    },
-    {
-      key: 'wicket-keeper',
-      label: 'Wicket Keeper',
-    },
-  ];
-
-  get fieldsControlObj() {
-    return this.customReactiveForm.controls;
-  }
-
-  get recordsFormArray(): FormArray<FormGroup<formGroupObj>> {
-    return this.fieldsControlObj.records!;
-  }
-
   ngOnInit(): void {
-
-    this.fieldsControlObj.extraDetail.valueChanges.subscribe((value)=>{
+    this.mainReactiveForm.controls.personExtraDetails.valueChanges.subscribe((value)=>{
       if(value) {
-        this.customReactiveForm.addControl('rolePreference', new FormArray(this.rolesList.map(() => new FormControl(false, { nonNullable:true }))));
+        this.mainReactiveForm.addControl('personRoles', new FormArray(this.rolesList.map(()=>new FormControl(false, {nonNullable:true}))));
       }
       else {
-        this.customReactiveForm.removeControl('rolePreference');
+        this.mainReactiveForm.removeControl('personRoles');
       }
     });
-
   }
-
-  formSubmission() {
-    console.log(this.customReactiveForm);
-  }
-
-  // mapRolePrefer() {
-  //   this.customReactiveForm.value.rolePreference = this.customReactiveForm.value.rolePreference
-  //   .map((status: boolean , index:number)=>{
-  //     return status ? this.rolesList[index] : null;
-  //   })
-  //   .filter((val: string | null)=>{
-  //     return val !== null;
-  //   });
-  // }
-
   addRecords() {
-
-    if(!this.fieldsControlObj.records) {
-      this.customReactiveForm.addControl('records', new FormArray<FormGroup<formGroupObj>>([]));
-      this.pushRecords();
+    if(!this.mainReactiveForm.controls.personRecords) {
+      this.mainReactiveForm.addControl('personRecords', new FormArray<FormGroup<recordsControl>>([]));
+      this.pushGroup();
     }
     else {
-      this.pushRecords();
+      this.pushGroup();
     }
-
   }
-  
-  pushRecords() {
-
-    this.recordsFormArray.push(
-      new FormGroup<formGroupObj>({
-        recordDate: new FormControl<string | null>(null, Validators.required),
-        record: new FormControl<string | null>(null, Validators.required),
-        opponentCountry: new FormControl<string | null>(null, Validators.required),
-      }),      
+  pushGroup() {
+    this.mainReactiveForm.controls.personRecords?.push(
+      new FormGroup<recordsControl>({
+        recordDate: new FormControl(null, {validators: Validators.required}),
+        record: new FormControl(null, {validators: Validators.required}),
+        opponentCountry: new FormControl(null, {validators: Validators.required}),
+      })
     );
-
   }
-  
   removeRecords(index:number) {
-
-    this.recordsFormArray.removeAt(index);
-    
-    if(!this.recordsFormArray.length) {
-      this.customReactiveForm.removeControl('records');
+    this.mainReactiveForm.controls.personRecords?.removeAt(index);
+    if(!this.mainReactiveForm.controls.personRecords?.length) {
+      this.mainReactiveForm.removeControl('personRecords');
     }
-
   }
-
+  formSubmission() {
+    console.log(this.mainReactiveForm.value);        
+  }
 }
