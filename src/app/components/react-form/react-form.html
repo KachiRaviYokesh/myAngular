@@ -1,86 +1,27 @@
-<form [formGroup]="mainReactiveForm" (ngSubmit)="formSubmission()">
-    <div>
-        <label for="">First Name : </label>
-        <input type="text" formControlName="personFirstName">
-    </div>
-    <div>
-        <label for="">Email : </label>
-        <input type="email" formControlName="personEmail">
-    </div>
-    <div>
-        <label for="">Number : </label>
-        <input type="number" formControlName="personNumber">
-    </div>
-    <div>
-        <label for="">DOB : </label>
-        <input type="date" formControlName="personDOB">
-    </div>
-    <div>
-        <label for="">Country : </label>
-        <select formControlName="personCountry">
-            <option value="" hidden>Select</option>
-            <option value="Australia">Australia</option>
-            <option value="England">England</option>
-            <option value="India">India</option>
-        </select>
-    </div>
-    <div>
-        <label for="">Gender : </label>
-        <div>
-            <input type="radio" value="male" formControlName="personGender">Male
-            <input type="radio" value="female" formControlName="personGender">Female
-            <input type="radio" value="others" formControlName="personGender">Others
-        </div>
-    </div>
-    <div>
-        <label for="">Extra Details : </label>
-        <input type="checkbox" formControlName="personExtraDetails">Role
-    </div>
-    @if(mainReactiveForm.controls.personExtraDetails.value) {
-        <div>
-            <label for="">Roles</label>
-            <div formArrayName="personRoles">
-                @for(item of rolesList; track item; let index = $index) {
-                    <input type="checkbox" value="{{item}}" [formControlName]="index">{{item}}
-                }
-            </div>
+<form [formGroup]="mainForm" (ngSubmit)="formSubmission()">
+    <input type="text" formControlName="name" placeholder="Name">
+    @if(mainForm.get('name')?.touched && mainForm.get('name')?.hasError('required')) {
+        <span>Required</span>
+    }
+    @if(mainForm.get('name')?.hasError('spaceExist')) {
+        <span>Space Not Required</span>
+    }
+    <br>
+    <input type="checkbox" formControlName="moreDetails">
+    <br>
+    @if(mainForm.get('moreDetails')?.value) {
+        <div formGroupName="mDtl">
+            <input type="email" formControlName="email">
+            <br>
+            <input type="date" formControlName="dob">
+            <br>
         </div>
     }
-    <div>
-        <label for="">Records</label>
-        <button type="button" (click)="addRecords()" class="border border-black px-2 py-1">Add</button>
-    </div>
-    @if(this.mainReactiveForm.controls.personRecords) {
-        @for(item of this.mainReactiveForm.controls.personRecords.controls; track item; let index = $index) {
-            <div>
-                <div>
-                    <label for="">Record Date</label>
-                    <input type="date">
-                </div>
-                <div>
-                    <label for="">Record</label>
-                    <textarea></textarea>
-                </div>
-                <div>
-                    <label for="">Opponent Country</label>
-                    <select>
-                        <option value="" hidden>Select</option>
-                        <option value="Australia">Australia</option>
-                        <option value="England">England</option>
-                        <option value="India">India</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="">Remove</label>
-                    <button type="button" (click)="removeRecords(index)" class="border border-black px-2 py-1">Delete</button>
-                </div>
-            </div>
-        }
-    }
-    <div>
-        <input type="submit" value="Submit" class="border border-black px-3 py-2">
-        @if(this.mainReactiveForm.invalid && this.mainReactiveForm.touched) {
-            <span>Form Invalid</span>
+    <div formArrayName="roles">
+        @for(role of rolesArray; track role; let i = $index ) {
+            <input type="checkbox" formControlName="{{i}}">{{role.Label}}
+            <br>
         }
     </div>
+    <button type="submit" class="border border-black">Submit</button>
 </form>

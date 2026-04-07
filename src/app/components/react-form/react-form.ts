@@ -1,23 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-interface mainFormTypes {
-  personFirstName: FormControl<string | null>,
-  personEmail: FormControl<string | null>,
-  personNumber: FormControl<number | null>,
-  personDOB: FormControl<string | null>,
-  personCountry: FormControl<string | null>,
-  personGender: FormControl<string | null>,
-  personExtraDetails: FormControl<boolean>,
-  personRoles?: FormArray<FormControl<boolean>>,
-  personRecords?: FormArray<FormGroup<recordsControl>>,
-}
-
-interface recordsControl {
-  recordDate: FormControl<string | null>,
-  record: FormControl<string | null>,
-  opponentCountry: FormControl<string | null>,
-}
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-react-form',
@@ -26,51 +8,73 @@ interface recordsControl {
   styles: ``,
 })
 export class ReactForm implements OnInit {
-  rolesList = ['Batsman', 'Bowler', 'Captain', 'Wicket-Keeper'];
-  mainReactiveForm = new FormGroup<mainFormTypes>({
-    personFirstName: new FormControl(null, {validators: Validators.required}),
-    personEmail: new FormControl(null, {validators: [Validators.required, Validators.email]}),
-    personNumber: new FormControl(null, {validators: Validators.required}),
-    personDOB: new FormControl(null, {validators: Validators.required}),
-    personCountry: new FormControl(null, {validators: Validators.required}),
-    personGender: new FormControl(null, {validators: Validators.required}),
-    personExtraDetails: new FormControl(false, {nonNullable:true}),
-  });
+  mainForm!: FormGroup;
+  a!: FormGroup;
+
+  constructor( private _formBuilder: FormBuilder) {}
+
+  rolesArray = [
+    {
+      Label: 'Batsman',
+      key: 'batsman',
+      isChecked: false
+    },
+    {
+      Label: 'Bowler',
+      key: 'bowler',
+      isChecked: false
+    },
+    {
+      Label: 'All-Rounder',
+      key: 'all-rounder',
+      isChecked: false
+    },
+  ];
   ngOnInit(): void {
-    this.mainReactiveForm.controls.personExtraDetails.valueChanges.subscribe((value)=>{
+
+    this.a = this._formBuilder.group({
+      name: ['', [Validators.required]],
+    });
+
+    this.mainForm = new FormGroup({
+      name: new FormControl('', { validators: [Validators.required, this.noSpaceCheck] }),
+      moreDetails: new FormControl(false),
+      roles: new FormArray(
+        this.rolesArray.map(()=>new FormControl(false)),
+      ),
+    });
+
+    this.mainForm.get('moreDetails')?.valueChanges.subscribe(value => {
       if(value) {
-        this.mainReactiveForm.addControl('personRoles', new FormArray(this.rolesList.map(()=>new FormControl(false, {nonNullable:true}))));
+        this.mainForm.addControl('mDtl', new FormGroup({
+          email: new FormControl('', { validators: [Validators.email] }),
+          dob: new FormControl('', { validators: [Validators.required] })
+        }, { validators: this.customValid() }))
       }
       else {
-        this.mainReactiveForm.removeControl('personRoles');
+        this.mainForm.removeControl('mDtl');
       }
     });
+
+    this.mainForm.get('roles')?.valueChanges.subscribe(value => {
+      console.log(value);      
+    });
+
   }
-  addRecords() {
-    if(!this.mainReactiveForm.controls.personRecords) {
-      this.mainReactiveForm.addControl('personRecords', new FormArray<FormGroup<recordsControl>>([]));
-      this.pushGroup();
+
+  noSpaceCheck(control: AbstractControl): ValidationErrors | null {
+    const nameVal = control.value;
+    if(nameVal.includes(' ')) {
+      return {spaceExist : true};
     }
-    else {
-      this.pushGroup();
-    }
+    return null;
   }
-  pushGroup() {
-    this.mainReactiveForm.controls.personRecords?.push(
-      new FormGroup<recordsControl>({
-        recordDate: new FormControl(null, {validators: Validators.required}),
-        record: new FormControl(null, {validators: Validators.required}),
-        opponentCountry: new FormControl(null, {validators: Validators.required}),
-      })
-    );
+
+  customValid() {
+    return null;
   }
-  removeRecords(index:number) {
-    this.mainReactiveForm.controls.personRecords?.removeAt(index);
-    if(!this.mainReactiveForm.controls.personRecords?.length) {
-      this.mainReactiveForm.removeControl('personRecords');
-    }
-  }
+
   formSubmission() {
-    console.log(this.mainReactiveForm.value);        
+    console.log(this.mainForm);    
   }
 }
