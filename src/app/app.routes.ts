@@ -72,6 +72,10 @@ export const routes: Routes = [
         loadComponent: () => import('./components/react-form/react-form').then(c => c.ReactForm)
     },
     {
+        path: 'playground',
+        loadComponent: () => import('./components/playground/playground').then(c=>c.Playground)
+    },
+    {
         path: '**',
         loadComponent:()=>import('./components/no-records/no-records').then(c=>c.NoRecords)
     }

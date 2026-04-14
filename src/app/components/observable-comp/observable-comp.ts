@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { from, map, Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-observable-comp',

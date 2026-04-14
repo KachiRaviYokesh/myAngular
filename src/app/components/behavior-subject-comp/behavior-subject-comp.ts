@@ -21,7 +21,7 @@ export class BehaviorSubjectComp implements OnInit {
       next: (data) => {
         this.firstBehaviorSubData.set(data.toUpperCase());
       }
-    });    
+    });
   }
   protected updateFirstBehaviorSubjectData() {
     this.firstBehaviorSubVariable$.next('second');
