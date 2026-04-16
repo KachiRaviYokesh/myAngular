@@ -1,1 +1,24 @@
-<p>playground works!</p>
+<input type="text" placeholder="Eye Color" [formControl]="searchableVal">
+
+<table>
+    <tr>
+        <th>Age</th>
+        <th>DOB</th>
+        <th>BG</th>
+        <th>EYE COLOR</th>
+        <th>GENDER</th>
+        <th>HEIGHT</th>
+        <th>ROLE</th>
+    </tr>
+    @for(data of apiData(); track data) {
+        <tr>
+            <td>{{data.age}}</td>
+            <td>{{data.birthDate}}</td>
+            <td>{{data.bloodGroup}}</td>
+            <td>{{data.eyeColor}}</td>
+            <td>{{data.gender}}</td>
+            <td>{{data.height}}</td>
+            <td>{{data.role}}</td>
+        </tr>
+    }
+</table>
