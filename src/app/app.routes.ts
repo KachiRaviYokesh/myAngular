@@ -72,6 +72,10 @@ export const routes: Routes = [
         loadComponent: () => import('./components/react-form/react-form').then(c => c.ReactForm)
     },
     {
+        path: 'ngrx',
+        loadComponent: () => import('./components/ngrx-concept/ngrx-concept').then(c => c.NgrxConcept) 
+    },
+    {
         path: 'playground',
         loadComponent: () => import('./components/playground/playground').then(c=>c.Playground)
     },
